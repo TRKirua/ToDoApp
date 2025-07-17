@@ -3,6 +3,7 @@
 
 # production
 /build
+./parcel-cache
 
 # misc
 .DS_Store

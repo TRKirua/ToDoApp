@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Create an account</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-  <script src="js/supabase.js"></script>
-  <link href="./assets/styles.css" rel="stylesheet">
-  <style>
-    body {
-      
-      background: radial-gradient(circle at top left, #000000 0%, #313131 100%);
-    }
-  </style>
-</head>
-<body class="min-h-screen flex items-center justify-center text-white">
-  <div class="w-full max-w-md p-10 bg-black rounded-xl">
-    <h1 class="text-4xl text-white font-bold mb-8 text-center tracking-tight">Sign Up</h1>
-    <div class="space-y-6">
-      <input
-        type="email"
-        id="email"
-        placeholder="Email"
-        class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg"
-      />
-      <input
-        type="password"
-        id="password"
-        placeholder="Password"
-        class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg"
-      />
-      <input
-        type="password"
-        id="confirm"
-        placeholder="Confirm Password"
-        class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg"
-      />
+  <head>
+    <meta charset="UTF-8">
+    <title>Create an account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script src="js/supabase.js"></script>
+    <link href="./assets/styles.css" rel="stylesheet">
+    <style>
+      body {
+        
+        background: radial-gradient(circle at top left, #000000 0%, #313131 100%);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center text-white">
+    <div class="w-full max-w-md p-10 bg-black rounded-xl">
+      <h1 class="text-4xl text-white font-bold mb-8 text-center tracking-tight">Sign Up</h1>
+      <div class="space-y-6">
+        <input
+          type="email"
+          id="email"
+          placeholder="Email"
+          class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg"
+        />
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg"
+        />
+        <input
+          type="password"
+          id="confirm"
+          placeholder="Confirm Password"
+          class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg"
+        />
 
-      <button
-        onclick="handleSignup()"
-        class="will-change-transform w-full py-3 bg-gradient-to-r from-blue-500 via-red-500 to-pink-500 font-semibold rounded-xl shadow-lg hover:scale-105 transition-all duration-300"
-      >
-        Create my account
-      </button>
+        <button
+          onclick="handleSignup()"
+          class="will-change-transform w-full py-3 bg-gradient-to-r from-blue-500 via-red-500 to-pink-500 font-semibold rounded-xl shadow-lg hover:scale-105 transition-all duration-300"
+        >
+          Create my account
+        </button>
 
-      <p class="text-center mt-4">
-        <a href="index.html" class="text-sm text-white underline hover:text-yellow-400 transition">← Back to login</a>
-      </p>
+        <p class="text-center mt-4">
+          <a href="index.html" class="text-sm text-white underline hover:text-yellow-400 transition">← Back to login</a>
+        </p>
+      </div>
     </div>
-  </div>
-  <script>
-    async function handleSignup() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const confirm = document.getElementById("confirm").value;
+    <script>
+      async function handleSignup() {
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirm = document.getElementById("confirm").value;
 
-      if (!email || !password || !confirm) {
-        alert("Please fill in all fields.");
-        return;
+        if (!email || !password || !confirm) {
+          alert("Please fill in all fields.");
+          return;
+        }
+        if (password !== confirm) {
+          alert("Passwords do not match.");
+          return;
+        }
+        const { error } = await signupEmail(email, password);
+        if (!error) {
+          alert("Account created. An email has been sent to verify your account.");
+          window.location.href = "index.html";
+        }
       }
-      if (password !== confirm) {
-        alert("Passwords do not match.");
-        return;
-      }
-      const { error } = await signupEmail(email, password);
-      if (!error) {
-        alert("Account created. An email has been sent to verify your account.");
-        window.location.href = "index.html";
-      }
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>

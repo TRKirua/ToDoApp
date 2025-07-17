@@ -1,12 +1,10 @@
 // supabase.js
-
 const client = supabase.createClient(
   'https://demgzkckfyecwlqhnagn.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbWd6a2NrZnllY3dscWhuYWduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1MTg1MzAsImV4cCI6MjA2ODA5NDUzMH0.TTezaMHYPoodQ3Ma6eiO7qox6dn4RF-mkAPqlePnUKc'
 );
 
 // --- AUTH ---
-
 async function loginEmail() {
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;

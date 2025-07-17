@@ -1,8 +1,12 @@
 # dependencies
 /node_modules
+src/assets/
 
 # production
 /build
+
+# cache
+.cache/
 .parcel-cache/
 
 # misc

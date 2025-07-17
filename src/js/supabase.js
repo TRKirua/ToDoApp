@@ -32,7 +32,7 @@ export async function handleSignup() {
   if (pwd !== confirm) return alert('Passwords do not match')
   const { error } = await client.auth.signUp({ email, password: pwd })
   if (error) return alert(error.message)
-  alert('Account created. Vérifie ton email.')
+  alert('Account created. An email has been sent to verify your account.')
   window.location.href = 'index.html'
 }
 

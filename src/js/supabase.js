@@ -1,10 +1,10 @@
 // supabase.js
 import { createClient } from '@supabase/supabase-js'
 
-const client = createClient(
-  'https://demgzkckfyecwlqhnagn.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbWd6a2NrZnllY3dscWhuYWduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1MTg1MzAsImV4cCI6MjA2ODA5NDUzMH0.TTezaMHYPoodQ3Ma6eiO7qox6dn4RF-mkAPqlePnUKc'
-)
+const SUPABASE_URL     = process.env.SUPABASE_URL
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
+
+export const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 // --- AUTH ---
 export async function loginEmail() {

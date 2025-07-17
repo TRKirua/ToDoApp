@@ -30,7 +30,9 @@ async function loadTasks() {
         <input type="checkbox" ${t.done ? 'checked' : ''} class="accent-pink-500 w-5 h-5 rounded"/>
         <span class="${t.done ? 'line-through' : ''}">${t.title}</span>
       </div>
-      <button>Delete</button>
+      <button class="px-4 py-2 bg-gradient-to-r from-yellow-500 via-red-500 to-pink-500 font-semibold rounded-lg shadow hover:scale-105 transition duration-300">
+        Delete
+      </button>
     `
     li.querySelector('input').onchange = async e => {
       await api.updateTask(t.id, { done: e.target.checked })

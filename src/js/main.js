@@ -1,7 +1,8 @@
 // main.js
-import * as api from './supabase.js'
-Object.assign(window, api)
 import '../css/input.css'
+import * as api from './supabase.js'
+
+Object.assign(window, api)
 
 window.addEventListener('DOMContentLoaded', async () => {
   const user = await api.getCurrentUser()

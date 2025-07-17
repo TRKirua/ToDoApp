@@ -10,8 +10,10 @@ export const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 export async function loginEmail() {
   const email = document.getElementById('email').value.trim()
   const password = document.getElementById('password').value
+
   if (!email || !password) return alert('Required fields')
   const { error } = await client.auth.signInWithPassword({ email, password })
+
   if (error) return alert(error.message)
   window.location.href = 'tasks.html'
 }
@@ -21,7 +23,7 @@ export async function loginGoogle() {
     provider: 'google',
     options: { redirectTo: `${window.location.origin}/tasks.html` }
   })
-  if (error) console.error(error)
+  if (error) console.error("Error while trying to log in with Google:", error);
 }
 
 export async function handleSignup() {

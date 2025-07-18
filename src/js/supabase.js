@@ -21,19 +21,24 @@ export async function loginEmail() {
 export async function loginGoogle() {
   const { error } = await client.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: `${window.location.origin}/tasks.html` }
-  })
-  if (error) console.error("Error while trying to log in with Google:", error);
+    options: {
+      redirectTo: `${window.location.origin}/${window.location.pathname.includes('tasks.html') ? 'tasks.html' : ''}`,
+    }
+  });
+  if (error) console.error(error);
 }
 
 export async function handleSignup() {
   const email = document.getElementById('email').value.trim()
   const pwd = document.getElementById('password').value
   const confirm = document.getElementById('confirm').value
+
   if (!email || !pwd || !confirm) return alert('Please fill all fields')
   if (pwd !== confirm) return alert('Passwords do not match')
+
   const { error } = await client.auth.signUp({ email, password: pwd })
   if (error) return alert(error.message)
+
   alert('Account created. An email has been sent to verify your account.')
   window.location.href = 'index.html'
 }

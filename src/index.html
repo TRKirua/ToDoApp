@@ -3,54 +3,83 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ToDo App – Login</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login</title>
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script src="js/supabase.js"></script>
 </head>
 
 <body
   class="min-h-screen flex items-center justify-center text-white"
-  style="background: radial-gradient(circle at top left, #000000 0%, #313131 100%);"
+  style="background: radial-gradient(circle at top left, #000, #313131);"
 >
 
-  <div class="w-full max-w-md p-10 bg-black rounded-xl">
-    
+  <div class="w-full max-w-md p-10 bg-black bg-opacity-80 rounded-xl shadow-lg">
+
     <h1 class="text-4xl font-bold mb-8 text-center tracking-tight">Login</h1>
     
     <div class="space-y-6">
-      
+
       <input id="email" type="email" placeholder="Email"
-        class="w-full px-4 py-2 bg-neutral-900 rounded-lg focus:outline-none focus:ring-1 focus:ring-white transition" />
+        class="will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg focus:outline-none focus:ring-1 focus:ring-white transition"
+      />
       
-        <input id="password" type="password" placeholder="Password"
-        class="w-full px-4 py-2 bg-neutral-900 rounded-lg focus:outline-none focus:ring-1 focus:ring-white transition" />
+      <input id="password" type="password" placeholder="Password"
+      class=" will-change-transform w-full px-4 py-2 bg-neutral-900 rounded-lg focus:outline-none focus:ring-1 focus:ring-white transition" />
       
-        <div class="flex gap-4">
-        <button onclick="loginEmail()"
-          class="w-full py-3 bg-gradient-to-r from-yellow-500 to-red-500 font-semibold rounded-xl hover:scale-105 transition duration-300">
+      <div class="flex gap-4">
+
+        <button
+          onclick="loginEmail()"
+          class="will-change-transform flex-1 py-3 bg-gradient-to-r from-yellow-500 to-red-500 font-semibold rounded-xl shadow hover:scale-105 transition-transform duration-300"
+        >
           Login with Email
         </button>
-        <button onclick="window.location.href='signup.html'"
-          class="w-full py-3 bg-gradient-to-r from-blue-500 to-green-500 font-semibold rounded-xl hover:scale-105 transition duration-300">
+
+        <button
+          onclick="window.location.href='signup.html'"
+          class="will-change-transform flex-1 py-3 bg-gradient-to-r from-blue-500 to-green-500 font-semibold rounded-xl shadow hover:scale-105 transition-transform duration-300"
+        >
           Sign Up
         </button>
+
       </div>
       
       <hr class="my-6 border-white" />
       
-      <button onclick="loginGoogle()"
-        class="w-full py-2 bg-neutral-900 hover:bg-white hover:text-black hover:scale-105 rounded-lg transition duration-300 flex justify-center items-center gap-1">
-        Login with
-        <span class="font-bold tracking-normal text-white">
+      <button
+        onclick="loginGoogle()"
+        class="will-change-transform w-full py-2 bg-neutral-900 hover:bg-white hover:text-black rounded-lg transition-all duration-300 flex items-center justify-center gap-2"
+      >
+        <span>Login with</span>
+        <span class="font-bold tracking-normal">
           <span style="color:#4285F4">G</span><span style="color:#EA4335">o</span>
           <span style="color:#FBBC05">o</span><span style="color:#4285F4">g</span>
           <span style="color:#34A853">l</span><span style="color:#EA4335">e</span>
         </span>
+
       </button>
     
     </div>
   
   </div>
-  <script type="module" src="./js/main.js"></script>
 
 </body>
+
+<script>
+
+  window.addEventListener('DOMContentLoaded', async () => {
+
+    const user = await getCurrentUser();
+    
+    if (user) {
+      window.location.href = 'tasks.html';
+    }
+
+  });
+
+</script>
+
 </html>

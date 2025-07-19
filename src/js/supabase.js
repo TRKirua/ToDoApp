@@ -1,75 +1,112 @@
-// supabase.js
-import { createClient } from '@supabase/supabase-js'
+// src/js/supabase.js
+const client = supabase.createClient(
+  'https://demgzkckfyecwlqhnagn.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbWd6a2NrZnllY3dscWhuYWduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI1MTg1MzAsImV4cCI6MjA2ODA5NDUzMH0.TTezaMHYPoodQ3Ma6eiO7qox6dn4RF-mkAPqlePnUKc'
+);
 
-const SUPABASE_URL = process.env.SUPABASE_URL
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY
+// Auth
 
-export const client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+async function loginEmail() {
 
-// --- AUTH ---
-export async function loginEmail() {
-  const email = document.getElementById('email').value.trim()
-  const password = document.getElementById('password').value
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  if (!email || !password) return alert('Please fill all fields.');
 
-  if (!email || !password) return alert('Required fields')
-  const { error } = await client.auth.signInWithPassword({ email, password })
+  const { error } = await client.auth.signInWithPassword({ email, password });
 
-  if (error) return alert(error.message)
-  window.location.href = 'tasks.html'
+  if (error) {
+    console.error('Login error:', error.message);
+    return alert(error.message);
+  }
+
+  window.location.href = 'tasks.html';
+
 }
 
-export async function loginGoogle() {
+async function loginGoogle() {
+
   const { error } = await client.auth.signInWithOAuth({
     provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/${window.location.pathname.includes('tasks.html') ? 'tasks.html' : ''}`,
-    }
+    options: { redirectTo: window.location.origin + '/tasks.html' }
   });
-  if (error) console.error(error);
+
+  if (error) {
+    console.error('Google login error:', error.message);
+    return alert(error.message);
+  }
+
 }
 
-export async function handleSignup() {
-  const email = document.getElementById('email').value.trim()
-  const pwd = document.getElementById('password').value
-  const confirm = document.getElementById('confirm').value
+async function handleSignup() {
 
-  if (!email || !pwd || !confirm) return alert('Please fill all fields')
-  if (pwd !== confirm) return alert('Passwords do not match')
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const confirm = document.getElementById('confirm').value;
 
-  const { error } = await client.auth.signUp({ email, password: pwd })
-  if (error) return alert(error.message)
+  if (!email || !password || !confirm) return alert('Please fill all fields.');
+  if (password !== confirm) return alert('Passwords do not match.');
 
-  alert('Account created. An email has been sent to verify your account.')
-  window.location.href = 'index.html'
+  const { error } = await client.auth.signUp({ email, password });
+
+  if (error) {
+    console.error('Signup error:', error.message);
+    return alert(error.message);
+  }
+
+  alert('Account created. Please check your email to verify your account.');
+  window.location.href = 'index.html';
+
 }
 
-export async function logout() {
-  await client.auth.signOut()
-  window.location.href = 'index.html'
+async function logout() {
+
+  await client.auth.signOut();
+  window.location.href = 'index.html';
+
 }
 
-export async function getCurrentUser() {
-  const { data, error } = await client.auth.getUser()
-  return error || !data.user ? null : data.user
+// User & Tasks
+
+async function getCurrentUser() {
+
+  const { data, error } = await client.auth.getUser();
+  return error || !data.user ? null : data.user;
+
 }
 
-// --- TASKS CRUD ---
-export async function getTasks() {
-  const { data, error } = await client.from('tasks').select('*').order('id', { ascending: false })
-  return error ? [] : data
+async function getTasks() {
+
+  const { data } = await client
+    .from('tasks')
+    .select('*')
+    .order('id', { ascending: false });
+
+  return data || [];
+
 }
 
-export async function createTask(title) {
-  const { error } = await client.from('tasks').insert([{ title, done: false }])
-  return !error
+async function createTask(title) {
+
+  title = title.trim();
+  
+  if (!title) return false;
+
+  const { error } = await client
+    .from('tasks')
+    .insert([{ title, done: false }]);
+
+  return !error;
+
 }
 
-export async function updateTask(id, updates) {
-  const { error } = await client.from('tasks').update(updates).eq('id', id)
-  return !error
+async function updateTask(id, done) {
+
+  await client.from('tasks').update({ done }).eq('id', id);
+
 }
 
-export async function deleteTask(id) {
-  const { error } = await client.from('tasks').delete().eq('id', id)
-  return !error
+async function deleteTask(id) {
+
+  await client.from('tasks').delete().eq('id', id);
+
 }
